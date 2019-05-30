@@ -39,7 +39,7 @@ class StatisticUsingTest extends TestCase
     public function testBadFilterFromMonthstring()
     {
         $this->stat->fromMonth = 'test';
-        $this->stat->fromYear = 2019;
+        $this->stat->fromYear = 2017;
         $this->stat->toYear = 2019;
         $this->expectException(\InvalidArgumentException::class);
         $this->stat->validate();
@@ -48,7 +48,7 @@ class StatisticUsingTest extends TestCase
     public function testBadFilterFromMonthFloat()
     {
         $this->stat->fromMonth = '1.1';
-        $this->stat->fromYear = 2019;
+        $this->stat->fromYear = 2017;
         $this->stat->toYear = 2019;
         $this->expectException(\InvalidArgumentException::class);
         $this->stat->validate();
@@ -57,7 +57,7 @@ class StatisticUsingTest extends TestCase
     public function testBadFilterFromMonthMax()
     {
         $this->stat->fromMonth = 14;
-        $this->stat->fromYear = 2019;
+        $this->stat->fromYear = 2017;
         $this->stat->toYear = 2019;
         $this->expectException(\InvalidArgumentException::class);
         $this->stat->validate();
@@ -66,7 +66,7 @@ class StatisticUsingTest extends TestCase
     public function testBadFilterFromMonthMin()
     {
         $this->stat->fromMonth = 0;
-        $this->stat->fromYear = 2019;
+        $this->stat->fromYear = 2017;
         $this->stat->toYear = 2019;
         $this->expectException(\InvalidArgumentException::class);
         $this->stat->validate();
@@ -75,7 +75,7 @@ class StatisticUsingTest extends TestCase
     public function testBadFilterToMonthString()
     {
         $this->stat->toMonth = 'test';
-        $this->stat->fromYear = 2019;
+        $this->stat->fromYear = 2017;
         $this->stat->toYear = 2019;
         $this->expectException(\InvalidArgumentException::class);
         $this->stat->validate();
@@ -84,7 +84,7 @@ class StatisticUsingTest extends TestCase
     public function testBadFilterToMonthFloat()
     {
         $this->stat->toMonth = '1.1';
-        $this->stat->fromYear = 2019;
+        $this->stat->fromYear = 2017;
         $this->stat->toYear = 2019;
         $this->expectException(\InvalidArgumentException::class);
         $this->stat->validate();
@@ -93,7 +93,7 @@ class StatisticUsingTest extends TestCase
     public function testBadFilterToMonthMax()
     {
         $this->stat->toMonth = 14;
-        $this->stat->fromYear = 2019;
+        $this->stat->fromYear = 2017;
         $this->stat->toYear = 2019;
         $this->expectException(\InvalidArgumentException::class);
         $this->stat->validate();
@@ -102,7 +102,7 @@ class StatisticUsingTest extends TestCase
     public function testBadFilterToMonthMin()
     {
         $this->stat->toMonth = 0;
-        $this->stat->fromYear = 2019;
+        $this->stat->fromYear = 2017;
         $this->stat->toYear = 2019;
         $this->expectException(\InvalidArgumentException::class);
         $this->stat->validate();
@@ -112,7 +112,7 @@ class StatisticUsingTest extends TestCase
     {
         $this->stat->toMonth = 2;
         $this->stat->fromMonth = 4;
-        $this->stat->fromYear = 2019;
+        $this->stat->fromYear = 2017;
         $this->stat->toYear = 2019;
         $this->expectException(\InvalidArgumentException::class);
         $this->stat->validate();
@@ -139,7 +139,7 @@ class StatisticUsingTest extends TestCase
     {
         $this->stat->toMonth = 1;
         $this->stat->fromMonth = 12;
-        $this->stat->fromYear = 2019;
+        $this->stat->fromYear = 2017;
         $this->expectException(\InvalidArgumentException::class);
         $this->stat->validate();        
     }
