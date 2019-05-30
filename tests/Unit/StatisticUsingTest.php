@@ -23,10 +23,6 @@ class StatisticUsingTest extends TestCase
     
     public function testNoFilter()
     {
-        $this->stat->fromMonth = 1;
-        $this->stat->toMonth = 2;
-        $this->stat->fromYear = 2018;
-        $this->stat->toYear = 2018;
         $res = $this->stat->getData();
         $this->assertIsArray($res);
     }
@@ -35,7 +31,7 @@ class StatisticUsingTest extends TestCase
     {
         $this->stat->fromMonth = 1;
         $this->stat->toMonth = 12;
-        $this->stat->fromYear = 2019;
+        $this->stat->fromYear = 2017;
         $this->stat->toYear = 2019;
         $this->assertTrue($this->stat->validate());    
     }
