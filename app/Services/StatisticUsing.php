@@ -15,14 +15,20 @@ class StatisticUsing extends StatisticAbstract
     public $fromYear;
     public $toYear;
     
-    public function getData() : array
+    public function __construct(Connection $db, \Illuminate\Validation\Validator $validator)
     {
+        parent::__construct($db, $validator);
         $this->validator->setRules([
             'fromMonth' => 'nullable|integer|min:1|max:12',
             'toMonth' => 'nullable|integer|min:1|max:12|gte:fromMonth',
             'fromYear' => 'nullable|integer|required_with:fromMonth|min:1970|max:' . date('Y'),
             'toYear' => 'nullable|integer|required_with:toMonth|gte:fromYear|min:1970|max:' . date('Y'),
         ]);
+
+    }
+    
+    public function validate()
+    {
         $this->validator->setData([
             'fromMonth' => $this->fromMonth,
             'toMonth' => $this->toMonth,
@@ -32,10 +38,16 @@ class StatisticUsing extends StatisticAbstract
         if ($this->validator->fails()) {
             throw new \InvalidArgumentException(implode(', ', $this->validator->errors()->all()));
         }
+        return true;
+    }
+    
+    public function getData() : array
+    {
+        $this->validate();
         $where = [];
         if (!empty($this->fromYear)) {
             $this->fromMonth = $this->fromMonth ?? 1;
-            $where[] = "(MONTH(journal.created_at) >= {$this->fromMonth} AND YEAR(journal.created_at) => {$this->fromYear})";
+            $where[] = "(MONTH(journal.created_at) >= {$this->fromMonth} AND YEAR(journal.created_at) >= {$this->fromYear})";
         }
         if (!empty($this->toYear)) {
             $this->toMonth = $this->toMonth ?? 12;
@@ -61,7 +73,6 @@ class StatisticUsing extends StatisticAbstract
         $monthEnd = $this->toMonth ?? $monthData[count($monthData) -1]->mn;
         $result = [];
         foreach (range($yearStart, $yearEnd) as $year) {
-            //echo $month->cnt, ':', $month->mn, ':', $month->ya, PHP_EOL;
             $yearStat = $this->getYearData($year, $monthStart, ($year === $yearEnd ? $monthEnd : 12));
             $result = array_merge($result, $yearStat);
             $monthStart = 1;
@@ -119,7 +130,7 @@ class StatisticUsing extends StatisticAbstract
             $result[] = [
                 'date' => $year . '-' . $month,
                 'title' => $stat->title,
-                'value' => $stat->cnt
+                'value' => (int)$stat->cnt
             ];
         }
         $result[] = [
